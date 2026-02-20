@@ -18,6 +18,7 @@ import { AletwendeSend } from './pages/AletwendeSend';
 import { Shop } from './pages/Shop';
 import { OrderFoodies } from './pages/OrderFoodies';
 import { FoodiesRoute } from './pages/FoodiesRoute';
+import { FoodDelivery } from './pages/FoodDelivery';
 import { MessageProvider } from './contexts/MessageContext';
 import { RideProvider } from './contexts/RideContext';
 import { OrderSessionProvider } from './contexts/OrderSessionContext';
@@ -327,6 +328,10 @@ function AppContent() {
             <Route
               path="/foodies-route"
               element={<FoodiesRoute />}
+            />
+            <Route
+              path="/food-delivery"
+              element={<FoodDelivery />}
             />
             <Route
               path="/select-ride"

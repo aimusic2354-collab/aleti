@@ -30,6 +30,7 @@ interface FoodOrderSessionContextType {
   canAddStop: () => boolean;
   getCurrentLocationFoods: () => FoodItem[];
   removeStopsWithoutFoodOrAddress: () => void;
+  setDeliveryMode: (modeId: string, fee: number) => void;
 }
 
 const FoodOrderSessionContext = createContext<FoodOrderSessionContextType | undefined>(undefined);
@@ -122,6 +123,10 @@ function FoodOrderSessionProviderInner({ children }: { children: React.ReactNode
     );
   };
 
+  const setDeliveryMode = (modeId: string, fee: number) => {
+    console.log('Delivery mode set:', modeId, 'Fee:', fee);
+  };
+
   const value: FoodOrderSessionContextType = {
     cartItems,
     currentLocationFoodIds,
@@ -134,6 +139,7 @@ function FoodOrderSessionProviderInner({ children }: { children: React.ReactNode
     canAddStop,
     getCurrentLocationFoods,
     removeStopsWithoutFoodOrAddress,
+    setDeliveryMode,
   };
 
   return (

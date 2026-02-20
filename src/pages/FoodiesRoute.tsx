@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Plus, X, Clock, ChevronRight } from 'lucide-react';
 import { useFoodOrderSession, FoodItem } from '../contexts/FoodOrderSession';
@@ -9,6 +9,7 @@ import { mockDeliveryAddresses, getDeliveryAddressSuggestions } from '../data/mo
 
 export function FoodiesRoute() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { address: currentLocation, loading: locationLoading } = useGeolocation();
   const {
     cartItems,
@@ -138,6 +139,23 @@ export function FoodiesRoute() {
     removeStopsWithoutFoodOrAddress();
     navigate('/food-delivery');
   };
+
+  useEffect(() => {
+    if (location.state) {
+      const { highlightCurrentLocation, autoAddStop } = location.state;
+
+      if (highlightCurrentLocation) {
+        setActiveLocationInput('current-location');
+        setTimeout(() => currentLocationInputRef.current?.focus(), 100);
+      }
+
+      if (autoAddStop) {
+        handleAddStop();
+      }
+
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location.state]);
 
   const currentLocationFoods = getCurrentLocationFoods();
   const currentLocationSuggestions = getDeliveryAddressSuggestions(currentLocationQuery);
