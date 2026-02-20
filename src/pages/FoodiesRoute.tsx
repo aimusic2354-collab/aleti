@@ -362,21 +362,35 @@ export function FoodiesRoute() {
         )}
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-gray-100 z-20">
+      <motion.div
+        className="fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-gray-100 z-20"
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 300, delay: 0.2 }}
+      >
         <motion.button
           onClick={handleGoToDelivery}
-          disabled={currentLocationFoods.length === 0}
-          className={`w-full py-3 rounded-lg font-semibold text-sm transition-colors flex items-center justify-center gap-2 ${
-            currentLocationFoods.length > 0
-              ? 'bg-green-600 text-white hover:bg-green-700'
+          disabled={cartItems.length === 0}
+          className={`w-full py-3 rounded-lg font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
+            cartItems.length > 0
+              ? 'bg-green-600 text-white hover:bg-green-700 shadow-lg'
               : 'bg-gray-300 text-gray-500 cursor-not-allowed'
           }`}
-          whileTap={{ scale: 0.98 }}
+          whileTap={{ scale: cartItems.length > 0 ? 0.98 : 1 }}
+          whileHover={{ scale: cartItems.length > 0 ? 1.02 : 1 }}
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ type: 'spring', damping: 20, stiffness: 300, delay: 0.3 }}
         >
           Go to delivery
-          <ChevronRight size={16} />
+          <motion.div
+            animate={{ x: [0, 3, 0] }}
+            transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+          >
+            <ChevronRight size={16} />
+          </motion.div>
         </motion.button>
-      </div>
+      </motion.div>
 
       <FoodSelectionModal
         isOpen={showCurrentLocationModal}

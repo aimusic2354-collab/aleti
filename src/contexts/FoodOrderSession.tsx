@@ -77,6 +77,13 @@ function FoodOrderSessionProviderInner({ children }: { children: React.ReactNode
   }));
 
   useEffect(() => {
+    if (cartItems.length > 0 && currentLocationFoodIds.length === 0) {
+      const allItemIds = cartItems.map(item => item.id);
+      setCurrentLocationFoodIds(allItemIds);
+    }
+  }, [cartItems.length]);
+
+  useEffect(() => {
     const data = {
       currentLocationFoodIds,
       stops,
